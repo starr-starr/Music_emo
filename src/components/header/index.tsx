@@ -12,6 +12,7 @@ interface MyProps {
 }
 
 const Header: FC<MyProps> = memo(() => {
+    let flag
     const renderLink = (item:any) => {
         return (item.type === 'path'
             ? <NavLink to={item.path} className='text-center'>{item.title}<i className="icon topBar"></i></NavLink>
@@ -31,16 +32,19 @@ const Header: FC<MyProps> = memo(() => {
                         <div className='flex leading-[70px]'>
                             {
                                 headTags.map( (item) => {
+                                    flag = item.title.length === 2
+                                            ? 'w-[66px]'
+                                            : 'w-[94px]'
                                     return (
-                                        <div className="relative text-[14px] w-[94px] text-center" key={item.title}>
+                                        <div className={`relative text-[14px] ${flag} text-center`} key={item.title}>
                                             {renderLink(item)}
                                         </div>
                                     )
                                 })
                             }
                         </div>
-                        {/* search & login */}
-                        <div className='flex items-center text-[#787878] text-xs'>
+                        {/* search & auth & login */}
+                        <div className='flex items-center text-[#787878] text-xs text-center'>
                             <Input className="w-[158px] h-[32px] rounded-[32px] text-[12px]" placeholder="音乐/视频/电台/用户" prefix={<SearchOutlined/>}/>
                             <span className="w-[90px] h-8 leading-8 text-center border text-[#ccc] cursor-pointer mx-4 my-0 rounded-2xl border-solid border-[#666] hover:text-[#fff] hover:border-[#fff]">创作者中心</span>
                             <span className="login">登录</span>
