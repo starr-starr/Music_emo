@@ -15,8 +15,9 @@ const Header: FC<MyProps> = memo(() => {
     let flag
     const renderLink = (item:any) => {
         return (item.type === 'path'
-            ? <NavLink to={item.path} className='text-center active:text-[#fff] active:bg-[#000]'>{item.title}</NavLink>
-            : <a href={item.link} className='active:text-[#fff] active:bg-[#000]' rel="noreferrer" target="_blank">{item.title}</a>)
+            ? <div className='flex'><NavLink to={item.path} className='text-center w-full h-full'>{item.title}</NavLink></div>
+            : <a href={item.link} rel="noreferrer" target="_blank">{item.title}</a>
+        )
     }
     return (
         <div className='h-[70px] bg-[#242424] text-[#fff] text-[12px]'>

@@ -5,3 +5,10 @@
 .topBar {
     background: url(@/assets/png/topbar.png) no-repeat 0 9999px;
 }
+
+.active {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: white;
+}
