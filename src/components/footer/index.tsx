@@ -10,13 +10,13 @@ const Footer: FC<MyProps> = memo(() => {
     return(
         <div className='h-[172px] bg-[#f2f2f2] text-[#666] border-t-[#d3d3d3] border-t border-solid;'>
             <div className="flex justify-between items-center w-[980px] my-0 mx-auto flex-col">
-                <div className="flex footItem">
+                <div className="flex mt-[30px] footItem">
                     {
                         footerImages.map((item) => {
                             return (
                                 <li className="items-center w-[45px] text-center ml-[80px]" key={item.link}>
                                     <a className="block w-[50px] h-[45px] footIcon" href={item.link} rel="noopener noreferrer" target="_blank"> </a>
-                                    <span className="block w-[100px] h-[16px] mt-[5px] text-[12px] font-[400] whitespace-nowrap">{item.title}</span>
+                                    <span className="block w-[100px] h-[16px] mt-[8px] text-[12px] font-[400] whitespace-nowrap  ml-[-26px]">{item.title}</span>
                                 </li>
                             )
                         })
