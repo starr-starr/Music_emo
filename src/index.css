@@ -2,17 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 顶部导航栏所需  */
 .topBar {
     background: url(@/assets/png/topbar.png) no-repeat 0 9999px;
 }
-
+/* 携带 active 类名（选中） 样式*/
 .topNav > .active {
     width: 100%;
     height: 100%;
     background-color: black;
     color: white;
 }
-
+/* 选中小红箭头 */
 .active > .icon {
     background-position: -226px 0;
 }
+
+/* 底部 icon */
+.footIcon {
+    background: url(@/assets/png/footer.png) no-repeat;
+    background-size: 220px 220px;
+}
+
