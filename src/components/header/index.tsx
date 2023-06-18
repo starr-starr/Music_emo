@@ -2,7 +2,7 @@ import type { FC, ReactNode } from "react";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
-import headTags from '@/assets/data/headTags.json'
+import { headTags } from '@/assets/data/headTags.ts'
 
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -15,8 +15,8 @@ const Header: FC<MyProps> = memo(() => {
     let flag
     const renderLink = (item:any) => {
         return (item.type === 'path'
-            ? <NavLink to={item.path} className='text-center'>{item.title}<i className="icon topBar"></i></NavLink>
-            : <a href={item.link} rel="noreferrer" target="_blank">{item.title}</a>)
+            ? <NavLink to={item.path} className='text-center active:text-[#fff] active:bg-[#000]'>{item.title}</NavLink>
+            : <a href={item.link} className='active:text-[#fff] active:bg-[#000]' rel="noreferrer" target="_blank">{item.title}</a>)
     }
     return (
         <div className='h-[70px] bg-[#242424] text-[#fff] text-[12px]'>
@@ -36,7 +36,7 @@ const Header: FC<MyProps> = memo(() => {
                                             ? 'w-[66px]'
                                             : 'w-[94px]'
                                     return (
-                                        <div className={`relative text-[14px] ${flag} text-center`} key={item.title}>
+                                        <div className={`relative text-[14px] ${flag} text-center text-[#cccccc] hover:text-[#fff] hover:bg-[#000] last:mr-2 cursor-pointer`} key={item.title}>
                                             {renderLink(item)}
                                         </div>
                                     )

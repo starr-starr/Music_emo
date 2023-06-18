@@ -1,4 +1,4 @@
-[
+export const headTags = [
   {
     "title": "发现音乐",
     "type": "path",
@@ -17,17 +17,17 @@
   {
     "title": "商城",
     "type": "link",
-    "path": "https://music.163.com/store/product"
+    "link": "https://music.163.com/store/product"
   },
   {
     "title": "音乐人",
     "type": "link",
-    "path": "https://music.163.com/st/musician"
+    "link": "https://music.163.com/st/musician"
   },
   {
     "title": "云推歌",
     "type": "link",
-    "path": "https://music.163.com/st/ad-song"
+    "link": "https://music.163.com/st/ad-song"
   },
   {
     "title": "下载客户端",
