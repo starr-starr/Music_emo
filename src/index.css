@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+li {
+    list-style-type:none;
+}
 /* 顶部导航栏所需  */
 .topBar {
     background: url(@/assets/png/topbar.png) no-repeat 0 9999px;
@@ -23,4 +26,43 @@
     background: url(@/assets/png/footer.png) no-repeat;
     background-size: 220px 220px;
 }
+
+.footItem:first-child {
+    margin-left: 0!important;
+}
+
+.footItem li:nth-child(1) > a {
+    background-position: -170px -5px;
+}
+
+.footItem li:nth-child(2) > a {
+    background-position: -5px -170px;
+}
+
+.footItem li:nth-child(3) > a {
+    background-position: -5px -60px;
+}
+
+.footItem li:nth-child(4) > a {
+    background: url(@/assets/png/xStudio.png);
+    background-size: 45px;
+}
+
+.footItem li:nth-child(5) > a {
+    background-position: -60px -60px;
+}
+
+.footItem li:nth-child(6) > a {
+    background-position: -115px -115px;
+}
+
+.footItem li:nth-child(7) > a {
+    background: url(@/assets/png/cloudSong.png);
+    background-size: 45px;
+}
+
+.footItem li:nth-child(8) > a {
+    background-position: -170px -115px;
+}
+
 
