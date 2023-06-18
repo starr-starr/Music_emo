@@ -2,7 +2,7 @@ import type { FC, ReactNode } from "react";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
-import { headTags } from '@/assets/data/headTags.ts'
+import { headTags } from '@/assets/data/headData.ts'
 
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
