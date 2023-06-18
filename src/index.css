@@ -12,3 +12,7 @@
     background-color: black;
     color: white;
 }
+
+.active > .icon {
+    background-position: -226px 0;
+}
