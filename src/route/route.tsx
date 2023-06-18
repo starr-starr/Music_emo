@@ -47,7 +47,7 @@ export const routes: RouteObject[] = [
                 element: <Artist/>
             },
             {
-                path : 'album',
+                path : '/discover/album',
                 element: <Album/>
             }
         ]

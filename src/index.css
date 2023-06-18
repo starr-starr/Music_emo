@@ -5,6 +5,7 @@
 li {
     list-style-type:none;
 }
+
 /* 顶部导航栏所需  */
 .topBar {
     background: url(@/assets/png/topbar.png) no-repeat 0 9999px;
@@ -65,4 +66,8 @@ li {
     background-position: -170px -115px;
 }
 
-
+/* discover 页 SubNav 所需 */
+.SubNavItem > .active {
+    background-color: #9b0909;
+    border-radius: 20px;
+}
