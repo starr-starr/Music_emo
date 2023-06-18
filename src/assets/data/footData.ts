@@ -12,12 +12,20 @@ export const footerLinks = [
         link: 'https://st.music.163.com/official-terms/children'
     },
     {
-        title: '版权投诉指引',
+        title: '版权投诉',
         link: 'https://music.163.com/st/staticdeal/complaints.html'
     },
     {
-        title: '意见反馈',
-        link: '#'
+        title: '投资者关系',
+        link:'http://ir.music.163.com'
+    },
+    {
+        title: '广告合作',
+        link: 'https://music.163.com/ui/resource'
+    },
+    {
+        title: '联系我们',
+        link: 'https://mp.music.163.com/600948c936c13f4d09752e73/contact-us-web/index.html?source=Music-Main-Station'
     }
 ]
 
