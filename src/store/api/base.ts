@@ -5,6 +5,6 @@ export const baseApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl }),
     reducerPath: 'baseApi',
     keepUnusedDataFor: 5 * 60,
-    // refetchOnMountOrArgChange: true,
+    refetchOnMountOrArgChange: true,
     endpoints: () => ({}),
 });
