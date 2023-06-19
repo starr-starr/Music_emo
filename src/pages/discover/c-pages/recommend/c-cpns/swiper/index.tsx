@@ -1,5 +1,7 @@
 import { memo, useRef, useState} from "react";
 import type { FC,ReactNode,ElementRef } from "react";
+import {NavLink} from "react-router-dom";
+
 import { useGetBannerDataQuery } from "@/store/api/discover.ts";
 
 import { Carousel } from "antd";
@@ -29,6 +31,7 @@ const Swiper: FC<MyProps> = memo(() => {
             style={{background:`url('${bannerImg}') center center / 6000px`}}
         >
             <div className='w-[982px] h-[270px] my-0 mx-auto flex relative'>
+                {/* 轮播图 */}
                 <div className='relative w-[730px]'>
                     <Carousel
                         autoplay
@@ -65,6 +68,17 @@ const Swiper: FC<MyProps> = memo(() => {
                             })
                         }
                     </ul>
+                </div>
+                {/* 下载 */}
+                <div className='w-[254px]'>
+                    <NavLink to='/download' className='discoverDownload block w-[250px] h-[270px] relative'>
+                        <span className='absolute bottom-0 text-[#8d8d8d] left-[10px] truncate text-[12px] cursor-default'>PC 安卓 iPhone WP iPad Mac 六大客户端</span>
+                    </NavLink>
+                </div>
+                {/* 两侧按钮 */}
+                <div className='absolute -translate-y-2/4 h-[63px] top-2/4 inset-x-0 '>
+                    <button className="discoverBtn absolute w-[37px] h-[63px] bg-transparent cursor-pointer left-[-68px] bg-[0_-360px] hover:bg-gray-400" onClick={()=>carouselRef.current?.prev()}></button>
+                    <button className="discoverBtn absolute w-[37px] h-[63px] bg-transparent cursor-pointer right-[-68px] bg-[0_-508px] hover:bg-gray-400" onClick={()=>carouselRef.current?.next()}></button>
                 </div>
             </div>
         </div>
