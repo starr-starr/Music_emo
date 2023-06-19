@@ -72,6 +72,7 @@ li {
     border-radius: 20px;
 }
 
+/* discover 页 swiper  */
 .bannerItem {
     background: url(@/assets/png/banner.png) no-repeat 0 9999px;
 }
@@ -82,4 +83,14 @@ li {
 
 .bannerLi > .noactive {
     background-position: 3px -343px;
+}
+
+/* discover 页 download  */
+.discoverDownload {
+    background: url(@/assets/png/download.png) no-repeat 0 0;
+}
+
+/* discover 页 左右切换按钮 */
+.discoverBtn {
+    background-image: url(@/assets/png/banner.png);
 }
