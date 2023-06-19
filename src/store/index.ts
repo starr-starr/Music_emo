@@ -2,8 +2,8 @@ import {
     configureStore,
     combineReducers,
 } from '@reduxjs/toolkit';
-import {setupListeners} from '@reduxjs/toolkit/dist/query/react';
-import {baseApi} from './api/base';
+import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
+import { baseApi } from './api/base';
 
 const rootReducer = combineReducers({
     [baseApi.reducerPath]: baseApi.reducer,
@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
 // 中间件集合
 const middlewareHandler = (getDefaultMiddleware: any) => {
     const middlewareList = [...getDefaultMiddleware()];
+    middlewareList.push(baseApi.middleware);
     return middlewareList;
 };
 
