@@ -71,3 +71,15 @@ li {
     background-color: #9b0909;
     border-radius: 20px;
 }
+
+.bannerItem {
+    background: url(@/assets/png/banner.png) no-repeat 0 9999px;
+}
+
+.bannerLi > .active {
+    background-position: -16px -343px;
+}
+
+.bannerLi > .noactive {
+    background-position: 3px -343px;
+}
