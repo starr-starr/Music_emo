@@ -11,7 +11,6 @@ const Discover: FC<MyProps> = memo(() => {
     return(
         <>
             <SubNav/>
-            <div>Discover</div>
             <Outlet/>
         </>
     )

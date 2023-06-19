@@ -10,7 +10,6 @@ const Recommend: FC<MyProps> = memo(() => {
     return(
         <>
             <Swiper/>
-            <div>Recommend</div>
         </>
     )
 })
