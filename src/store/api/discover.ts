@@ -6,10 +6,10 @@ interface bannerType {
 
 const discoverApi = baseApi.injectEndpoints({
     endpoints:( builder ) => ({
-        getBannerData: builder.query<Promise<bannerType>, void>({
+        getBannerData: builder.query<bannerType['banners'], void>({
             query: () => '/banner',
             //  响应拦截器
-            transformResponse(response: { banners: Promise<bannerType> }) {
+            transformResponse(response: { banners: bannerType['banners'] }) {
                 return response.banners
             }
         })
