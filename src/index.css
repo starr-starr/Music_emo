@@ -94,3 +94,11 @@ li {
 .discoverBtn {
     background-image: url(@/assets/png/banner.png);
 }
+
+/*
+    1. MusicListHeader 左侧所需 红点 Btn
+    2. MusicListHeader 右侧所需 更多 icon
+*/
+.decorateBtn {
+    background: url(@/assets/png/decorateBtn.png) no-repeat 0 9999px;
+}
