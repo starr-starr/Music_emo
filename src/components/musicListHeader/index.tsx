@@ -23,11 +23,11 @@ const MusicListHeader: FC<MyProps> = memo((props) => {
                 <Link to={linkplace} className="font-[normal] text-xl leading-7 mr-5">{title}</Link>
                 <div className="flex items-center">
                     {
-                        keyword?.map((item,index)=>{
+                        keyword?.map((item)=>{
                             return(
                                 <div className="relative top-[2px] text-[#666] text-[12px]" key={item}>
                                     <span className="cursor-pointer hover:underline">{item}</span>
-                                    { (index !== keyword.length - 1) && <span className='my-0 mx-[10px] '>|</span>}
+                                    { ( item !== keyword.at(-1) ) && <span className='my-0 mx-[10px] '>|</span>}
                                 </div>
                             )
                         })
