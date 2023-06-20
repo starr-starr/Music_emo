@@ -20,7 +20,7 @@ const MusicListHeader: FC<MyProps> = memo((props) => {
             className='decorateBtn z-[9] bg-[-225px_-156px] h-[33px] bg-[-225px_-156px] flex justify-between items-center pl-[34px] pr-2.5 pt-0 pb-1 border-b-2 border-b-[#c10d0c] border-solid'
         >
             <div className="flex items-center">
-                <div className="font-[normal] text-xl leading-7 mr-5">{title}</div>
+                <Link to={linkplace} className="font-[normal] text-xl leading-7 mr-5">{title}</Link>
                 <div className="flex items-center">
                     {
                         keyword?.map((item,index)=>{
