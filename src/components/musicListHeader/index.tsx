@@ -35,10 +35,10 @@ const MusicListHeader: FC<MyProps> = memo((props) => {
                 </div>
             </div>
             <div className="flex items-center">
-                <Link to={linkplace} className="text-[#666] text-[12px] hover:underline">{more}</Link>
+                <Link to={linkplace} className="text-[#666] text-[12px] hover:underline mt-[3px]">{more}</Link>
                 <i
                     style={{backgroundPosition:'0 -240px'}}
-                    className="decorateBtn inline-block w-3 h-3 ml-1" ></i>
+                    className="decorateBtn inline-block w-3 h-3 ml-1 mt-[3px]"></i>
             </div>
         </div>
     )
