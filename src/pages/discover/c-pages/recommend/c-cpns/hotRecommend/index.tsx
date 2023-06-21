@@ -26,7 +26,7 @@ const HotRecommend: FC<MyProps> = memo(() => {
     })
     return(
         <>
-            {useRenderSuccess(isSuccess,data && <HotRecommendItem/>)}
+            {useRenderSuccess(isSuccess,<HotRecommendItem/>)}
         </>
     )
 })
