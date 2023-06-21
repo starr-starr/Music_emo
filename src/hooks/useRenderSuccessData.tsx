@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import type { ReactElement } from "react";
 
-
-export const useRenderSuccess = ( isSuccess: boolean,component:any ) => {
+export const useRenderSuccess = ( isSuccess: boolean,component:ReactElement ) => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
