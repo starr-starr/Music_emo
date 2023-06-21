@@ -8,26 +8,25 @@ import { useRenderSuccess } from "@/hooks/useRenderSuccessData.tsx";
 interface MyProps {
     children? : ReactNode
 }
-const HotRecommendItem = ( { data }: { data:any[] } ) => {
-    return (
-        <>
-            <MusicListHeader  title="热门推荐" keyword={["华语","流行","摇滚","民谣","电子"]} linkplace="/discover/playlist"/>
-            {
-                data && data.map( item => {
-                    return <MusicListItem key={item.id} itemData={item} />
-                })
-            }
-        </>
-    )
-}
 
 const HotRecommend: FC<MyProps> = memo(() => {
     const { data,isSuccess } = useGetHotRecommendDataQuery(30)
     console.log(isSuccess);
-
+    const HotRecommendItem = memo(() => {
+        return (
+            <>
+                <MusicListHeader  title="热门推荐" keyword={["华语","流行","摇滚","民谣","电子"]} linkplace="/discover/playlist"/>
+                {
+                    data && data.map( item => {
+                        return <MusicListItem key={item.id} itemData={item} />
+                    })
+                }
+            </>
+        )
+    })
     return(
         <>
-            {useRenderSuccess(isSuccess,data && <HotRecommendItem data={data}/>)}
+            {useRenderSuccess(isSuccess,data && <HotRecommendItem/>)}
         </>
     )
 })
