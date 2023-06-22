@@ -102,3 +102,12 @@ li {
 .decorateBtn {
     background: url(@/assets/png/decorateBtn.png) no-repeat 0 9999px;
 }
+
+/* MusicListItem 卡片 cover icons */
+.coverAll {
+    background: url(@/assets/png/coverall.png) no-repeat;
+}
+/* MusicListItem 卡片所需 icons */
+.iconAll {
+    background: url(@/assets/png/iconall.png) no-repeat;
+}
