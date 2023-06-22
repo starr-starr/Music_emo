@@ -21,7 +21,7 @@ const MusicListItem: FC<MyProps> = memo(( props ) => {
                         className="coverAll flex justify-between items-center absolute text-[#ccc] h-[27px] px-2.5 py-0 bottom-0 inset-x-0">
             <span>
               <i className="iconAll inline-block w-3.5 h-[11px] bg-[0_-24px] mr-[5px]"></i>
-              <span className="">{formatPlayCount(itemData.playCount)}</span>
+              <span className="text-[12px]">{formatPlayCount(itemData.playCount)}</span>
             </span>
                         <i
                             style={{backgroundPosition:'0 0'}}
