@@ -11,8 +11,10 @@ const Recommend: FC<MyProps> = memo(() => {
     return(
         <>
             <Swiper/>
-            <div className='w-[980px] mx-auto my-0'>
-                <HotRecommend/>
+            <div className={`w-[980px] mx-auto my-0 border bg-[url(${('@/assets/img/wrap-bg.png')}] flex border-solid border-[#d3d3d3]`}>
+                <div className='p-[20px] w-[729px]'>
+                    <HotRecommend/>
+                </div>
             </div>
         </>
     )
