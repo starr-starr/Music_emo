@@ -8,6 +8,10 @@ interface hotRecommendType {
     result : any[]
 }
 
+interface newAlbumType {
+    albums : any[]
+}
+
 const discoverApi = baseApi.injectEndpoints({
     endpoints:( builder ) => ({
         //  query<a,b>  a 是返回值的类型，b 是传给后端的类型
@@ -23,11 +27,18 @@ const discoverApi = baseApi.injectEndpoints({
             transformResponse(response: { result: hotRecommendType['result'] } ) {
                 return response.result
             }
+        }),
+        getNewAlbumData: builder.query<newAlbumType['albums'],void>({
+            query: () => '/album/newest',
+            transformResponse(response: { albums: newAlbumType['albums'] } ) {
+                return response.albums
+            }
         })
     })
 })
 
 export const {
     useGetBannerDataQuery,
-    useGetHotRecommendDataQuery
+    useGetHotRecommendDataQuery,
+    useGetNewAlbumDataQuery
 } = discoverApi
