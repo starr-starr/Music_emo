@@ -23,7 +23,7 @@ const discoverApi = baseApi.injectEndpoints({
             }
         }),
         getHotRecommendData: builder.query<hotRecommendType['result'], number>({
-            query: ( limit:number ) => `/personalized/${limit}`,
+            query: ( limit:number ) => `/personalized/?limit=${limit}`,
             transformResponse(response: { result: hotRecommendType['result'] } ) {
                 return response.result
             }
