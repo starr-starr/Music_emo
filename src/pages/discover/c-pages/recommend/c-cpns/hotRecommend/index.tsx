@@ -10,7 +10,7 @@ interface MyProps {
 }
 
 const HotRecommend: FC<MyProps> = memo(() => {
-    const { data,isSuccess } = useGetHotRecommendDataQuery(32)
+    const { data,isSuccess } = useGetHotRecommendDataQuery(8)
     const HotRecommendItem = memo(() => {
         return (
             <div className='mt-[10px]'>
