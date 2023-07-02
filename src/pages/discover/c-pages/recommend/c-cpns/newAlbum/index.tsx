@@ -32,19 +32,21 @@ const NewAlbum: FC<MyProps> = memo(() => {
                 ></button>
                 <div className="overflow-hidden flex-1">
                     <Carousel ref={bannerRef} dots={false} speed={1500}>
-                        {[0, 1].map((item) => {
-                            return (
-                                <div key={item}>
-                                    <div className="flex justify-between items-center">
-                                        {
-                                              data && data.slice(item * 5, (item + 1) * 5).map((item) => {
-                                                return <Album key={item.id} itemData={item} />
-                                            })
-                                        }
+                        {
+                            [0, 1].map((item) => {
+                                return (
+                                    <div key={item}>
+                                        <div className="flex justify-between items-center">
+                                            {
+                                                  data && data.slice(item * 5, (item + 1) * 5).map((item) => {
+                                                    return <Album key={item.id} itemData={item} />
+                                                })
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })}
+                                )
+                            })
+                        }
                     </Carousel>
                 </div>
                 <button
