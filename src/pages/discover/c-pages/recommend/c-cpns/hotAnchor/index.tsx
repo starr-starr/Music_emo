@@ -9,7 +9,7 @@ interface MyProps {
 const HotAnchor: FC<MyProps> = memo(() => {
     return(
         <div className='p-[20px]'>
-            <MusicListHeader title="热门主播" linkplace="/discover/djradio" />
+            <MusicListHeader title="热门主播" more='查看全部' linkplace="/discover/djradio" />
             <div className="mt-[20px]">
                 {
                     hotAnchor.map((item) => {
