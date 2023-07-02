@@ -5,11 +5,15 @@ interface bannerType {
 }
 
 interface hotRecommendType {
-    result : any[]
+    result: any[]
 }
 
 interface newAlbumType {
-    albums : any[]
+    albums: any[]
+}
+
+interface signedSingerType {
+    artists: any[]
 }
 
 const discoverApi = baseApi.injectEndpoints({
@@ -33,12 +37,20 @@ const discoverApi = baseApi.injectEndpoints({
             transformResponse(response: { albums: newAlbumType['albums'] } ) {
                 return response.albums
             }
+        }),
+        getSignedSingerData: builder.query<signedSingerType['artists'],number>({
+            query: ( limit ) => `/artist/list?limit=${limit}`,
+            transformResponse(response: { artists: signedSingerType['artists'] } ) {
+                return response.artists
+            }
         })
+
     })
 })
 
 export const {
     useGetBannerDataQuery,
     useGetHotRecommendDataQuery,
-    useGetNewAlbumDataQuery
+    useGetNewAlbumDataQuery,
+    useGetSignedSingerDataQuery
 } = discoverApi
