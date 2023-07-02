@@ -8,23 +8,27 @@ interface MyProps {
     keyword?: string []
     more?:string
     linkplace?:string
+    isDiscover?:boolean
 }
 
 const MusicListHeader: FC<MyProps> = memo((props) => {
 
-    const {title,keyword=[],more="更多",linkplace="/"} = props
+    const {title,keyword=[],more="更多",linkplace="/",isDiscover=true} = props
 
     return(
         <div
             className='decorateBtn  h-[33px] flex justify-between items-center  pr-2.5 pt-0 pb-1 border-b-2 border-b-[#c10d0c] border-solid'
         >
             <div className="flex">
-                <div
-                    style={{backgroundPosition:'-225px -156px'}}
-                    className="decorateBtn flex w-[25px] h-[25px]"
-                ></div>
+                {
+                    isDiscover &&
+                        <div
+                            style={{backgroundPosition:'-225px -156px'}}
+                            className="decorateBtn flex w-[25px] h-[25px]"
+                        ></div>
+                }
                 <div className="flex items-center">
-                    <Link to={linkplace} className="font-[normal] text-xl leading-7 mr-5">{title}</Link>
+                    <Link to={linkplace} className={`font-[normal] text-black leading-7 mr-5 ${isDiscover?'text-xl':'text-[12px]'}`}>{title}</Link>
                     <div className="flex items-center">
                         {
                             keyword?.map((item)=>{

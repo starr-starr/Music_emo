@@ -13,7 +13,7 @@ const SignedSinger: FC<MyProps> = memo(() => {
 
     return(
         <div className='p-[20px]'>
-            <MusicListHeader title="入驻歌手" more='查看全部' linkplace="/discover/artist" />
+            <MusicListHeader title="入驻歌手" more='查看全部' linkplace="/discover/artist" isDiscover={false}/>
             <div>
                 {
                     data && data.map((item) => {
