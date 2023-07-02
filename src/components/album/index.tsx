@@ -7,7 +7,6 @@ interface MyProps {
     itemData : any
 }
 const Album: FC<MyProps> = memo(({itemData}) => {
-    console.log(itemData);
     return(
         <div>
             <div className="relative w-[118px] h-[100px] overflow-hidden mt-[15px]">
