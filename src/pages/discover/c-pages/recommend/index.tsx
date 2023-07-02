@@ -6,6 +6,7 @@ import HotRecommend from "@/pages/discover/c-pages/recommend/c-cpns/hotRecommend
 import NewAlbum from "@/pages/discover/c-pages/recommend/c-cpns/newAlbum";
 import UserLogin from "@/pages/discover/c-pages/recommend/c-cpns/userLogin";
 import SignedSinger from "@/pages/discover/c-pages/recommend/c-cpns/signedSinger";
+import HotAnchor from "@/pages/discover/c-pages/recommend/c-cpns/hotAnchor";
 
 interface MyProps {
     children? : ReactNode
@@ -19,9 +20,10 @@ const Recommend: FC<MyProps> = memo(() => {
                     <HotRecommend/>
                     <NewAlbum/>
                 </div>
-                <div className='ml-[1px] w-[250px]'>
+                <div className='ml-[1px] w-[250px] text-[12px]'>
                     <UserLogin/>
                     <SignedSinger/>
+                    <HotAnchor/>
                 </div>
             </div>
         </>
