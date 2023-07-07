@@ -2,14 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    background-color: #ffffff;
+    color: #000;
+    /*--color-secondary-bg-for-transparent: rgba(209, 209, 214, 0.28);*/
+}
+
+html[data-theme='dark'] {
+    background-color: #222222;
+    color: #ffffff;
+    /*--color-primary-bg-for-transparent: rgba(255, 255, 255, 0.12);*/
+}
+
 li {
-    list-style-type:none;
+    list-style-type: none;
 }
 
 /* 顶部导航栏所需  */
 .topBar {
     background: url(@/assets/png/topbar.png) no-repeat 0 9999px;
 }
+
 /* 携带 active 类名（选中） 样式*/
 .topNav > .active {
     width: 100%;
@@ -17,6 +30,7 @@ li {
     background-color: black;
     color: white;
 }
+
 /* 选中小红箭头 */
 .active > .icon {
     background-position: -226px 0;
@@ -29,7 +43,7 @@ li {
 }
 
 .footItem:first-child {
-    margin-left: 0!important;
+    margin-left: 0 !important;
 }
 
 .footItem li:nth-child(1) > a {
@@ -107,7 +121,25 @@ li {
 .coverAll {
     background: url(@/assets/png/coverall.png) no-repeat;
 }
+
 /* MusicListItem 卡片所需 icons */
 .iconAll {
     background: url(@/assets/png/iconall.png) no-repeat;
+}
+
+/* rankingList   */
+.rankingIcon {
+    background: url(@/assets/png/icon.png) no-repeat 0 9999px;
+}
+
+.rankingList {
+    background: url(@/assets/png/rankingList.png);
+}
+
+.rankingPlay:hover {
+    background-position: -267px -235px!important;
+}
+
+.rankingCollect:hover {
+    background-position: -300px -235px!important;
 }

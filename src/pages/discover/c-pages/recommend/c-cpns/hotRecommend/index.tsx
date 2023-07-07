@@ -2,7 +2,7 @@ import { memo }  from "react";
 import type { FC,ReactNode } from "react";
 import MusicListHeader from "@/components/musicListHeader";
 import { useGetHotRecommendDataQuery } from "@/store/api/discover.ts";
-import MusicListItem from "@/components/MusicListItem";
+import MusicListItem from "@/components/musicListItem";
 import { useRenderSuccess } from "@/hooks/useRenderSuccessData.tsx";
 
 interface MyProps {
@@ -10,7 +10,7 @@ interface MyProps {
 }
 
 const HotRecommend: FC<MyProps> = memo(() => {
-    const { data,isSuccess } = useGetHotRecommendDataQuery(32)
+    const { data,isSuccess } = useGetHotRecommendDataQuery(8)
     const HotRecommendItem = memo(() => {
         return (
             <div className='mt-[10px]'>

@@ -5,7 +5,19 @@ interface bannerType {
 }
 
 interface hotRecommendType {
-    result : any[]
+    result: any[]
+}
+
+interface newAlbumType {
+    albums: any[]
+}
+
+interface signedSingerType {
+    artists: any[]
+}
+
+interface rankingType {
+    playlist: any[]
 }
 
 const discoverApi = baseApi.injectEndpoints({
@@ -19,9 +31,27 @@ const discoverApi = baseApi.injectEndpoints({
             }
         }),
         getHotRecommendData: builder.query<hotRecommendType['result'], number>({
-            query: ( limit:number ) => `/personalized/${limit}`,
+            query: ( limit:number ) => `/personalized/?limit=${limit}`,
             transformResponse(response: { result: hotRecommendType['result'] } ) {
                 return response.result
+            }
+        }),
+        getNewAlbumData: builder.query<newAlbumType['albums'],void>({
+            query: () => '/album/newest',
+            transformResponse(response: { albums: newAlbumType['albums'] } ) {
+                return response.albums
+            }
+        }),
+        getSignedSingerData: builder.query<signedSingerType['artists'],number>({
+            query: ( limit ) => `/artist/list?limit=${limit}`,
+            transformResponse(response: { artists: signedSingerType['artists'] } ) {
+                return response.artists
+            }
+        }),
+        getRankingData: builder.query<rankingType['playlist'],number>({
+            query: ( id: number)=> `/playlist/detail?id=${id}`,
+            transformResponse(response: { playlist: rankingType['playlist'] } ) {
+                return response.playlist
             }
         })
     })
@@ -29,5 +59,8 @@ const discoverApi = baseApi.injectEndpoints({
 
 export const {
     useGetBannerDataQuery,
-    useGetHotRecommendDataQuery
+    useGetHotRecommendDataQuery,
+    useGetNewAlbumDataQuery,
+    useGetSignedSingerDataQuery,
+    useGetRankingDataQuery
 } = discoverApi
