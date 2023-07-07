@@ -16,6 +16,10 @@ interface signedSingerType {
     artists: any[]
 }
 
+interface rankingType {
+    playlist: any[]
+}
+
 const discoverApi = baseApi.injectEndpoints({
     endpoints:( builder ) => ({
         //  query<a,b>  a 是返回值的类型，b 是传给后端的类型
@@ -43,8 +47,13 @@ const discoverApi = baseApi.injectEndpoints({
             transformResponse(response: { artists: signedSingerType['artists'] } ) {
                 return response.artists
             }
+        }),
+        getRankingData: builder.query<rankingType['playlist'],number>({
+            query: ( id: number)=> `/playlist/detail?id=${id}`,
+            transformResponse(response: { playlist: rankingType['playlist'] } ) {
+                return response.playlist
+            }
         })
-
     })
 })
 
@@ -52,5 +61,6 @@ export const {
     useGetBannerDataQuery,
     useGetHotRecommendDataQuery,
     useGetNewAlbumDataQuery,
-    useGetSignedSingerDataQuery
+    useGetSignedSingerDataQuery,
+    useGetRankingDataQuery
 } = discoverApi
