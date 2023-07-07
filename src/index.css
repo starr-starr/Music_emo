@@ -126,3 +126,8 @@ li {
 .iconAll {
     background: url(@/assets/png/iconall.png) no-repeat;
 }
+
+/* rankingList   */
+.rankingIcon {
+    background: url(@/assets/png/icon.png) no-repeat 0 9999px;
+}
