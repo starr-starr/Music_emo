@@ -131,3 +131,15 @@ li {
 .rankingIcon {
     background: url(@/assets/png/icon.png) no-repeat 0 9999px;
 }
+
+.rankingList {
+    background: url(@/assets/png/rankingList.png);
+}
+
+.rankingPlay:hover {
+    background-position: -267px -235px!important;
+}
+
+.rankingCollect:hover {
+    background-position: -300px -235px!important;
+}
