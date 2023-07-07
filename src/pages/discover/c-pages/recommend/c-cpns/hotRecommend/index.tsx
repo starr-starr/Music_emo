@@ -2,7 +2,7 @@ import { memo }  from "react";
 import type { FC,ReactNode } from "react";
 import MusicListHeader from "@/components/musicListHeader";
 import { useGetHotRecommendDataQuery } from "@/store/api/discover.ts";
-import MusicListItem from "@/components/MusicListItem";
+import MusicListItem from "@/components/musicListItem";
 import { useRenderSuccess } from "@/hooks/useRenderSuccessData.tsx";
 
 interface MyProps {
