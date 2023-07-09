@@ -143,3 +143,39 @@ li {
 .rankingCollect:hover {
     background-position: -300px -235px!important;
 }
+
+/* 播放条 */
+.pip {
+    background: url(@/assets/png/pip.png) no-repeat 0 0;
+}
+.playerBar {
+    background: url(@/assets/png/playbar.png) no-repeat 0 9999px;
+}
+.ant-slider {
+    position: relative;
+    top: -3px;
+    width: 493px;
+    margin-right: 10px;
+}
+.ant-slider-rail {
+    height: 9px!important;
+    background: url(@/assets/png/statbar.png) right 0;
+}
+.ant-slider-track {
+    height: 9px!important;
+    background: url(@/assets/png/statbar.png) left -66px;
+}
+.ant-slider-handle {
+    width: 22px!important;
+    height: 24px!important;
+    border: none;
+    margin-top: -7px;
+    background: url(@/assets/png/iconall.png) 0 -250px;
+}
+.ant-slider-handle::before{
+     content: none!important;
+ }
+.ant-slider-handle::after{
+     content: none!important;
+ }
+
