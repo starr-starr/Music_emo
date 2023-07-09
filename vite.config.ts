@@ -13,7 +13,7 @@ export default defineConfig({
     port:3001,
     proxy: {
       "/api": {
-        target: "https://netease-cloud-music-api-nine-orcin-25.vercel.app",
+        target: "http://localhost:3000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
