@@ -1,4 +1,7 @@
-import { createSlice} from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {useGetSongLyricDataQuery} from "@/store/api/play/playApi.ts";
+import {parseLyric} from "@/utils/parseLyric.ts";
+import {RootState} from "@/store";
 
 interface ILyric {
     time: number
@@ -193,6 +196,68 @@ const initialState: IPlayState = {
     playSongIndex:-1,
     playMode:0  // 0 1 2 顺序 随机 单曲
 }
+type FetchCurrentSongParams = {
+    songId: number;
+    songDetailData: any;
+    songLyricData: any;
+}
+export const FetchCurrentSong = createAsyncThunk<void,FetchCurrentSongParams,{state:RootState}>(
+    "currentSongs",
+    ({songId,songDetailData,songLyricData},{dispatch,getState})=>{
+        console.log(222);
+    // const songId = 4877413
+    // const { data: songDetailData } = useGetSongDetailDataQuery(songId)
+    // const { data: songLyricData } = useGetSongLyricDataQuery(songId)
+    const playSongList = getState().player.playSongList
+    const findIndex = playSongList.findIndex((item: { id: number; }) => item.id === songId)
+    if (findIndex === -1) {
+        const newList = [...playSongList];
+        newList.push(songDetailData);
+        songDetailData && dispatch(changeCurrentSong(songDetailData[0]));
+        dispatch(changePlaySongList(newList));
+        dispatch(changePlaySongIndex(newList.length - 1));
+    } else {
+        dispatch(changeCurrentSong(playSongList[findIndex]));
+        dispatch(changePlaySongIndex(findIndex));
+    }
+    dispatch(changeLyric(parseLyric(songLyricData)));
+})
+export const changeMusicNext = createAsyncThunk<void, boolean, {state:RootState}>(
+    'changemuisc',
+    (isNext:boolean, { dispatch, getState }) => {
+        // 1.获取state中的数据
+        const player = getState().player
+        const playMode = player.playMode
+        const songIndex = player.playSongIndex
+        const songList = player.playSongList
+
+        // 2.根据不同的模式计算不同的下一首歌曲的索引
+        let newIndex = songIndex
+        if (playMode === 1) {
+            // 随机播放
+            newIndex = Math.floor(Math.random() * songList.length)
+        } else {
+            // 单曲顺序和顺序播放
+            newIndex = isNext ? songIndex + 1 : songIndex - 1
+            if (newIndex > songList.length - 1) newIndex = 0
+            if (newIndex < 0) newIndex = songList.length - 1
+        }
+
+        // 3.获取当前的歌曲
+        const song = songList[newIndex]
+        dispatch(changeCurrentSong(song))
+        dispatch(changePlaySongIndex(newIndex))
+
+        // 4.请求新的歌词
+        const { data } = useGetSongLyricDataQuery(song.id)
+            // 1.获取歌词的字符串
+
+            // 2.对歌词进行解析(一个个对象)
+            const lyrics = parseLyric(data)
+            // 3.将歌词放到state中
+            dispatch(changeLyric(lyrics))
+    }
+)
 export const playerSlice = createSlice({
     name: 'player',
     initialState: initialState,
