@@ -155,7 +155,7 @@ const Player: FC<MyProps> = memo(() => {
                         />
                     </Link>
                     <div className="flex-1 text-[#a1a1a1] ml-2.5">
-                        <div className="text-[#e1e1e1] relative left-2 top-2">
+                        <div className="text-[#e1e1e1] relative left-2 top-2 text-[12px]">
                             <span>{currentSong?.name}</span>
                             <span className="text-[#a1a1a1] ml-2.5">{currentSong?.ar?.[0]?.name}</span>
                         </div>
