@@ -5,12 +5,12 @@ import {Link} from "react-router-dom";
 import defaultMusic from "@/assets/png/defaultMusic.png"
 import {getImageSize} from "@/utils/formatNumber.ts";
 import {formatTime} from "@/utils/formatNumber.ts";
-import {getSongPlayerUrl} from "@/utils/getSongUrl.ts";
 
 import {shallowEqualApp, useAppSelector, useThunkDispatch} from "@/store/hooks.ts";
 import {changeMusicNext, playerSlice} from "@/store/api/play/store.ts";
 
 import {message,Slider} from "antd";
+import {useGetSongUrlDataQuery} from "@/store/api/play/playApi.ts";
 
 
 interface MyProps {
@@ -83,6 +83,7 @@ const Player: FC<MyProps> = memo(() => {
         }
     }
     function handleChangeMusic(next=true){
+        setIsPlaying(false)
         dispatch(changeMusicNext(next))
     }
     //  拖拽中
@@ -107,19 +108,21 @@ const Player: FC<MyProps> = memo(() => {
         dispatch(playerSlice.actions.changePlayMode(newMode))
     }
 
+    const { data } = useGetSongUrlDataQuery(currentSong?.id)
+
     useEffect(()=>{
-        audioRef.current!.src = getSongPlayerUrl(currentSong?.id)
-        audioRef.current
-            ?.play()
-            .then(()=>{
-                setIsPlaying(true)
-            })
-            .catch((e)=>{
-                setIsPlaying(false)
-                console.log(e)})
+        data === undefined ? null : audioRef.current!.src = data
+        // audioRef.current
+        //     ?.play()
+        //     .then(()=>{
+        //         setIsPlaying(true)
+        //     })
+        //     .catch((e)=>{
+        //         setIsPlaying(false)
+        //         console.log(e)})
         setDuration(currentSong?.dt)
 
-    },[currentSong])
+    },[data,currentSong])
     return(
         <div
             style={{backgroundPosition:"0 0 ",backgroundRepeat:"repeat"}}
