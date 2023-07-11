@@ -16,7 +16,7 @@ function App() {
         if ( songDetailData &&  songLyricData){
             dispatch(FetchCurrentSong({songId:4877413,songDetailData,songLyricData}))
         }
-    }, [])
+    }, [songDetailData,songLyricData])
     return (
         <>
             <Header/>
