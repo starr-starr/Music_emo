@@ -1,41 +1,33 @@
 import {memo, useEffect, useRef, useState} from "react";
 import type { FC,ReactNode } from "react";
 import {Link} from "react-router-dom";
-import {getImageSize} from "@/utils/formatNumber.ts";
-import {Slider} from "antd";
+
 import defaultMusic from "@/assets/png/defaultMusic.png"
-import {useGetSongDetailDataQuery, useGetSongLyricDataQuery} from "@/store/api/play/playApi.ts";
-import {shallowEqualApp, useAppDispatch, useAppSelector} from "@/store/hooks.ts";
-import {playerSlice} from "@/store/api/play/store.ts";
-import {parseLyric} from "@/utils/parseLyric.ts";
+import {getImageSize} from "@/utils/formatNumber.ts";
 import {formatTime} from "@/utils/formatNumber.ts";
 import {getSongPlayerUrl} from "@/utils/getSongUrl.ts";
+
+import {shallowEqualApp, useAppSelector, useThunkDispatch} from "@/store/hooks.ts";
+import {changeMusicNext, playerSlice} from "@/store/api/play/store.ts";
+
+import {message,Slider} from "antd";
+
 
 interface MyProps {
     children? : ReactNode
 }
 
 const Player: FC<MyProps> = memo(() => {
-    const songId = 4877413
-    const { data: songDetailData } = useGetSongDetailDataQuery(songId)
-    const { data: songLyricData } = useGetSongLyricDataQuery(songId)
 
-    const dispatch = useAppDispatch()
+    const dispatch = useThunkDispatch()
 
     const [ isPlaying,setIsPlaying ] = useState(false)
+    const [isSliding,setIsSliding] = useState(false)
     const [ playModeState,setIsPlayModeState ] = useState(1)
     const [duration,setDuration] = useState(0)
     const [progress,setProgress] = useState(0)
     const [currentTime,setCurrentTime] = useState(0)
     const audioRef = useRef<HTMLAudioElement>(null)
-
-    const playModeBtnPosition = ()  => {
-        switch (playModeState){
-            case 1: return '-66px -248px'
-            case 2: return '-66px -344px'
-            default: return '-3px -344px'
-        }
-    }
 
     const { currentSong , Lyric,LyricIndex,playMode,playSongList} = useAppSelector((state) => ({
         currentSong: state.player.currentSong,
@@ -45,23 +37,76 @@ const Player: FC<MyProps> = memo(() => {
         playSongList : state.player.playSongList
     }),shallowEqualApp)
 
-    useEffect(() => {
-            const playerAction = playerSlice.actions
-            if (songDetailData && songLyricData) {
-                const findIndex = playSongList.findIndex((item: { id: number }) => item.id === songId);
-                if (findIndex === -1) {
-                    const newList = [...playSongList];
-                    newList.push(songDetailData);
-                    dispatch(playerAction.changeCurrentSong(songDetailData[0]));
-                    dispatch(playerAction.changePlaySongList(newList));
-                    dispatch(playerAction.changePlaySongIndex(newList.length - 1));
-                } else {
-                    dispatch(playerAction.changeCurrentSong(playSongList[findIndex]));
-                    dispatch(playerAction.changePlaySongIndex(findIndex));
-                }
-                dispatch(playerAction.changeLyric(parseLyric(songLyricData)));
+    const playModeBtnPosition = ()  => {
+        switch (playModeState){
+            case 1: return '-66px -248px'
+            case 2: return '-66px -344px'
+            default: return '-3px -344px'
+        }
+    }
+    function handlePlayClick(){
+        isPlaying
+            ?   audioRef.current?.pause()
+            :   audioRef.current?.play().catch(()=>setIsPlaying(false))
+        setIsPlaying(!isPlaying)
+    }
+    function handleSongPlay(){
+        const currentTime = audioRef.current!.currentTime*1000
+        if(!isSliding){
+            const progress = ((currentTime) / duration) * 100
+            setProgress(progress)
+            setCurrentTime(currentTime)
+        }
+        let index = Lyric.length - 1
+        for (let i = 0;i<Lyric.length;i++){
+            if (Lyric[i].time > currentTime){
+                index = i -1
+                break
             }
-        }, [songDetailData,songLyricData]);
+        }
+        if (LyricIndex === index || index === -1) {
+            return
+        }
+        dispatch(playerSlice.actions.changeLyricIndex(index))
+        message.open({
+            content: Lyric[index].text,
+            duration: 0,
+            key: "Lyric"
+        })
+    }
+    function handleEnd(){
+        if (playMode === 2){
+            audioRef.current!.currentTime = 0
+            audioRef.current?.play()
+        }else {
+            handleChangeMusic()
+        }
+    }
+    function handleChangeMusic(next=true){
+        dispatch(changeMusicNext(next))
+    }
+    //  拖拽中
+    function handleSliding(value:number){
+        setIsSliding(true)
+        setProgress(value)
+        const currentTime = (value/100)* duration
+        setCurrentTime(currentTime)
+    }
+    //  拖拽完
+    function handleSlider(value:number){
+        const currentTime = (value/100) * duration
+        audioRef.current!.currentTime = currentTime / 1000
+        setCurrentTime(currentTime)
+        setProgress(value)
+        setIsSliding(false)
+    }
+    //  播放模式
+    function handleChangePlayMode(){
+        let newMode = playMode + 1
+        if (playMode>2) newMode = 0
+        dispatch(playerSlice.actions.changePlayMode(newMode))
+    }
+
     useEffect(()=>{
         audioRef.current!.src = getSongPlayerUrl(currentSong?.id)
         audioRef.current
@@ -84,17 +129,17 @@ const Player: FC<MyProps> = memo(() => {
                     <button
                         style={{backgroundPosition:"0 -130px"}}
                         className="playerBar w-[28px] h-[28px] cursor-pointer"
-                        // onClick={()=>handleChangeMusic(false)}
+                        onClick={()=>handleChangeMusic(false)}
                     ></button>
                     <button
                         style={{backgroundPosition:`0 ${isPlaying ?'-165px' :'-204px'}`}}
                         className="playerBar w-9 h-9 mx-2 my-0 cursor-pointer"
-                        // onClick={handlePlayClick}
+                        onClick={handlePlayClick}
                     ></button>
                     <button
                         style={{backgroundPosition:"-80px -130px"}}
                         className="playerBar w-[28px] h-[28px] cursor-pointer"
-                        // onClick={()=>handleChangeMusic()}
+                        onClick={()=>handleChangeMusic()}
                     ></button>
                 </div>
                 <div className="flex w-[642px] items-center">
@@ -115,8 +160,8 @@ const Player: FC<MyProps> = memo(() => {
                                 step={0.5}
                                 value={progress}
                                 tooltip={{formatter : null}}
-                                // onChange={handleSliding}
-                                // onAfterChange={handleSlider}
+                                onChange={handleSliding}
+                                onAfterChange={handleSlider}
                             />
                             <div className="text-[12px]">
                                 <span className="text-[#a1a1a1]">{ currentTime ? formatTime(currentTime) : "00:00"}</span>
@@ -150,7 +195,7 @@ const Player: FC<MyProps> = memo(() => {
                         ></button>
                         <button
                             className={`w-[25px] h-[25px] playerBar ${playModeBtnPosition}`}
-                            // onClick={handleChangePlayMode}
+                            onClick={handleChangePlayMode}
                         ></button>
                         <button
                             style={{backgroundPosition:"-42px -68px"}}
@@ -161,8 +206,8 @@ const Player: FC<MyProps> = memo(() => {
             </div>
             <audio
                 ref={audioRef}
-                // onTimeUpdate={handleSongPlay}
-                // onEnded={handleEnd}
+                onTimeUpdate={handleSongPlay}
+                onEnded={handleEnd}
             />
         </div>
     )
