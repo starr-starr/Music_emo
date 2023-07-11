@@ -11,6 +11,7 @@ import {changeMusicNext, playerSlice} from "@/store/api/play/store.ts";
 
 import {message,Slider} from "antd";
 import {useGetSongUrlDataQuery} from "@/store/api/play/playApi.ts";
+import {getSongPlayerUrl} from "@/utils/getSongUrl.ts";
 
 
 interface MyProps {
@@ -111,7 +112,8 @@ const Player: FC<MyProps> = memo(() => {
     const { data } = useGetSongUrlDataQuery(currentSong?.id)
 
     useEffect(()=>{
-        data === undefined ? null : audioRef.current!.src = data
+        // data === undefined ? null : audioRef.current!.src = data
+        audioRef.current!.src = getSongPlayerUrl(currentSong?.id)
         // audioRef.current
         //     ?.play()
         //     .then(()=>{
