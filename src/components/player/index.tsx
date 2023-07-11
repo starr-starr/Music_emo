@@ -84,8 +84,8 @@ const Player: FC<MyProps> = memo(() => {
         }
     }
     function handleChangeMusic(next=true){
-        setIsPlaying(false)
         dispatch(changeMusicNext(next))
+        // handlePlayClick()
     }
     //  拖拽中
     function handleSliding(value:number){
@@ -109,22 +109,21 @@ const Player: FC<MyProps> = memo(() => {
         dispatch(playerSlice.actions.changePlayMode(newMode))
     }
 
-    const { data } = useGetSongUrlDataQuery(currentSong?.id)
 
     useEffect(()=>{
         // data === undefined ? null : audioRef.current!.src = data
         audioRef.current!.src = getSongPlayerUrl(currentSong?.id)
-        // audioRef.current
-        //     ?.play()
-        //     .then(()=>{
-        //         setIsPlaying(true)
-        //     })
-        //     .catch((e)=>{
-        //         setIsPlaying(false)
-        //         console.log(e)})
+        audioRef.current
+            ?.play()
+            .then(()=>{
+                setIsPlaying(true)
+            })
+            .catch((e)=>{
+                setIsPlaying(false)
+                console.log(e)})
         setDuration(currentSong?.dt)
 
-    },[data,currentSong])
+    },[currentSong])
     return(
         <div
             style={{backgroundPosition:"0 0 ",backgroundRepeat:"repeat"}}
