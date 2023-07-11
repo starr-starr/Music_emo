@@ -204,7 +204,6 @@ type FetchCurrentSongParams = {
 export const FetchCurrentSong = createAsyncThunk<void,FetchCurrentSongParams,{state:RootState}>(
     "currentSongs",
     ({songId,songDetailData,songLyricData},{dispatch,getState})=>{
-        console.log(222);
     // const songId = 4877413
     // const { data: songDetailData } = useGetSongDetailDataQuery(songId)
     // const { data: songLyricData } = useGetSongLyricDataQuery(songId)
