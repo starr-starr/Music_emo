@@ -4,9 +4,11 @@ import {
 } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
 import { baseApi } from './api/base';
+import { playerSlice } from '@/store/api/play/store.ts'
 
 const rootReducer = combineReducers({
     [baseApi.reducerPath]: baseApi.reducer,
+    player: playerSlice.reducer,
 });
 
 // 中间件集合
@@ -26,6 +28,8 @@ export const rootStore = configureStore({
 setupListeners(rootStore.dispatch);
 
 // 从 store 本身推断出 `RootState` 和 `AppDispatch` 类型
-export type RootState = ReturnType<typeof rootStore.getState>;
+export type RootState = ReturnType<typeof rootStore.getState>
+// 推断出类型: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof rootStore.dispatch
 
 
