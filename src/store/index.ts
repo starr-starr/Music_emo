@@ -4,9 +4,11 @@ import {
 } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
 import { baseApi } from './api/base';
+import { playerSlice } from '@/store/api/play/store.ts'
 
 const rootReducer = combineReducers({
     [baseApi.reducerPath]: baseApi.reducer,
+    player: playerSlice.reducer,
 });
 
 // 中间件集合
