@@ -1,27 +1,80 @@
-import {memo, useState} from "react";
+import {memo, useEffect, useRef, useState} from "react";
 import type { FC,ReactNode } from "react";
 import {Link} from "react-router-dom";
+import {getImageSize} from "@/utils/formatNumber.ts";
 import {Slider} from "antd";
+import defaultMusic from "@/assets/png/defaultMusic.png"
+import {useGetSongDetailDataQuery, useGetSongLyricDataQuery} from "@/store/api/play/playApi.ts";
+import {shallowEqualApp, useAppDispatch, useAppSelector} from "@/store/hooks.ts";
+import {playerSlice} from "@/store/api/play/store.ts";
+import {parseLyric} from "@/utils/parseLyric.ts";
+import {formatTime} from "@/utils/formatNumber.ts";
+import {getSongPlayerUrl} from "@/utils/getSongUrl.ts";
 
 interface MyProps {
     children? : ReactNode
 }
 
-
 const Player: FC<MyProps> = memo(() => {
+    const songId = 4877413
+    const { data: songDetailData } = useGetSongDetailDataQuery(songId)
+    const { data: songLyricData } = useGetSongLyricDataQuery(songId)
+
+    const dispatch = useAppDispatch()
+
     const [ isPlaying,setIsPlaying ] = useState(false)
-    const [ playMode,setIsPlayMode ] = useState(1)
-    const playModeBtnPosition = () => {
-        switch (playMode){
+    const [ playModeState,setIsPlayModeState ] = useState(1)
+    const [duration,setDuration] = useState(0)
+    const [progress,setProgress] = useState(0)
+    const [currentTime,setCurrentTime] = useState(0)
+    const audioRef = useRef<HTMLAudioElement>(null)
+
+    const playModeBtnPosition = ()  => {
+        switch (playModeState){
             case 1: return '-66px -248px'
             case 2: return '-66px -344px'
             default: return '-3px -344px'
         }
     }
-    const currentSong = ''
-    const currentTime = ''
-    const duration = ''
-    const progress = 1
+
+    const { currentSong , Lyric,LyricIndex,playMode,playSongList} = useAppSelector((state) => ({
+        currentSong: state.player.currentSong,
+        Lyric: state.player.Lyric,
+        LyricIndex : state.player.LyricIndex,
+        playMode : state.player.playMode,
+        playSongList : state.player.playSongList
+    }),shallowEqualApp)
+
+    useEffect(() => {
+            const playerAction = playerSlice.actions
+            if (songDetailData && songLyricData) {
+                const findIndex = playSongList.findIndex((item: { id: number }) => item.id === songId);
+                if (findIndex === -1) {
+                    const newList = [...playSongList];
+                    newList.push(songDetailData);
+                    dispatch(playerAction.changeCurrentSong(songDetailData[0]));
+                    dispatch(playerAction.changePlaySongList(newList));
+                    dispatch(playerAction.changePlaySongIndex(newList.length - 1));
+                } else {
+                    dispatch(playerAction.changeCurrentSong(playSongList[findIndex]));
+                    dispatch(playerAction.changePlaySongIndex(findIndex));
+                }
+                dispatch(playerAction.changeLyric(parseLyric(songLyricData)));
+            }
+        }, [songDetailData,songLyricData]);
+    useEffect(()=>{
+        audioRef.current!.src = getSongPlayerUrl(currentSong?.id)
+        audioRef.current
+            ?.play()
+            .then(()=>{
+                setIsPlaying(true)
+            })
+            .catch((e)=>{
+                setIsPlaying(false)
+                console.log(e)})
+        setDuration(currentSong?.dt)
+
+    },[currentSong])
     return(
         <div
             style={{backgroundPosition:"0 0 ",backgroundRepeat:"repeat"}}
@@ -31,38 +84,44 @@ const Player: FC<MyProps> = memo(() => {
                     <button
                         style={{backgroundPosition:"0 -130px"}}
                         className="playerBar w-[28px] h-[28px] cursor-pointer"
+                        // onClick={()=>handleChangeMusic(false)}
                     ></button>
                     <button
                         style={{backgroundPosition:`0 ${isPlaying ?'-165px' :'-204px'}`}}
                         className="playerBar w-9 h-9 mx-2 my-0 cursor-pointer"
+                        // onClick={handlePlayClick}
                     ></button>
                     <button
                         style={{backgroundPosition:"-80px -130px"}}
                         className="playerBar w-[28px] h-[28px] cursor-pointer"
+                        // onClick={()=>handleChangeMusic()}
                     ></button>
                 </div>
                 <div className="flex w-[642px] items-center">
                     <Link to="/artist">
                         <img
                             className="w-[34px] h-[34px] rounded-[5px]"
+                            src={ currentSong?.al?.picUrl ? getImageSize(currentSong?.al?.picUrl,40) : defaultMusic}
                             alt=""
                         />
                     </Link>
                     <div className="flex-1 text-[#a1a1a1] ml-2.5">
                         <div className="text-[#e1e1e1] relative left-2 top-2">
-                            <span>11</span>
-                            <span className="text-[#a1a1a1] ml-2.5">11</span>
+                            <span>{currentSong?.name}</span>
+                            <span className="text-[#a1a1a1] ml-2.5">{currentSong?.ar?.[0]?.name}</span>
                         </div>
                         <div className="flex items-center">
                             <Slider
                                 step={0.5}
                                 value={progress}
                                 tooltip={{formatter : null}}
+                                // onChange={handleSliding}
+                                // onAfterChange={handleSlider}
                             />
-                            <div>
-                                <span className="text-[#e1e1e1]">{currentTime}</span>
+                            <div className="text-[12px]">
+                                <span className="text-[#a1a1a1]">{ currentTime ? formatTime(currentTime) : "00:00"}</span>
                                 <span className="mx-[3px] my-0">/</span>
-                                <span>{duration}</span>
+                                <span className="text-[#797979]">{ duration ? formatTime(duration) : "00:00"}</span>
                             </div>
                         </div>
                     </div>
@@ -91,6 +150,7 @@ const Player: FC<MyProps> = memo(() => {
                         ></button>
                         <button
                             className={`w-[25px] h-[25px] playerBar ${playModeBtnPosition}`}
+                            // onClick={handleChangePlayMode}
                         ></button>
                         <button
                             style={{backgroundPosition:"-42px -68px"}}
@@ -99,7 +159,11 @@ const Player: FC<MyProps> = memo(() => {
                     </div>
                 </div>
             </div>
-            <audio/>
+            <audio
+                ref={audioRef}
+                // onTimeUpdate={handleSongPlay}
+                // onEnded={handleEnd}
+            />
         </div>
     )
 })
