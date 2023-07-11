@@ -248,13 +248,16 @@ export const changeMusicNext = createAsyncThunk<void, boolean, {state:RootState}
         dispatch(changePlaySongIndex(newIndex))
 
         // 4.请求新的歌词
-        const { data } = useGetSongLyricDataQuery(song.id)
+        fetch(`/api/lyric?id=${song.id}`)
+            .then(response => response.json())
+            .then((res:any) => {
             // 1.获取歌词的字符串
-
+            const lyricString = res.lrc.lyric
             // 2.对歌词进行解析(一个个对象)
-            const lyrics = parseLyric(data)
+            const lyrics = parseLyric(lyricString)
             // 3.将歌词放到state中
             dispatch(changeLyric(lyrics))
+        })
     }
 )
 export const playerSlice = createSlice({
