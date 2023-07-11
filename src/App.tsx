@@ -9,12 +9,12 @@ import {useEffect} from "react";
 import {useGetSongDetailDataQuery, useGetSongLyricDataQuery} from "@/store/api/play/playApi.ts";
 
 function App() {
-    const { data: songDetailData } = useGetSongDetailDataQuery(4877413)
-    const { data: songLyricData } = useGetSongLyricDataQuery(4877413)
+    const { data: songDetailData } = useGetSongDetailDataQuery(2049512697)
+    const { data: songLyricData } = useGetSongLyricDataQuery(2049512697)
     const dispatch = useThunkDispatch()
     useEffect(() => {
         if ( songDetailData &&  songLyricData){
-            dispatch(FetchCurrentSong({songId:4877413,songDetailData,songLyricData}))
+            dispatch(FetchCurrentSong({songId:2049512697,songDetailData,songLyricData}))
         }
     }, [songDetailData,songLyricData])
     return (
