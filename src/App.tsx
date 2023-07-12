@@ -3,20 +3,10 @@ import {routes} from "@/route/route.tsx";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Player from "@/components/player";
-import {useThunkDispatch} from "@/store/hooks.ts";
-import {FetchCurrentSong} from "@/store/api/play/store.ts";
-import {useEffect} from "react";
-import {useGetSongDetailDataQuery, useGetSongLyricDataQuery} from "@/store/api/play/playApi.ts";
+import {useFetchSongData} from "@/hooks/useFetchSongData.tsx";
 
 function App() {
-    const { data: songDetailData } = useGetSongDetailDataQuery(2049512697)
-    const { data: songLyricData } = useGetSongLyricDataQuery(2049512697)
-    const dispatch = useThunkDispatch()
-    useEffect(() => {
-        if ( songDetailData &&  songLyricData){
-            dispatch(FetchCurrentSong({songId:2049512697,songDetailData,songLyricData}))
-        }
-    }, [songDetailData,songLyricData])
+    useFetchSongData(2049512697)
     return (
         <>
             <Header/>
