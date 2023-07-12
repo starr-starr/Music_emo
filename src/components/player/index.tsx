@@ -10,7 +10,6 @@ import {shallowEqualApp, useAppSelector, useThunkDispatch} from "@/store/hooks.t
 import {changeMusicNext, playerSlice} from "@/store/api/play/store.ts";
 
 import {message,Slider} from "antd";
-import {useGetSongUrlDataQuery} from "@/store/api/play/playApi.ts";
 import {getSongPlayerUrl} from "@/utils/getSongUrl.ts";
 
 
@@ -109,7 +108,6 @@ const Player: FC<MyProps> = memo(() => {
         dispatch(playerSlice.actions.changePlayMode(newMode))
     }
 
-
     useEffect(()=>{
         // data === undefined ? null : audioRef.current!.src = data
         audioRef.current!.src = getSongPlayerUrl(currentSong?.id)
@@ -122,8 +120,8 @@ const Player: FC<MyProps> = memo(() => {
                 setIsPlaying(false)
                 console.log(e)})
         setDuration(currentSong?.dt)
-
     },[currentSong])
+
     return(
         <div
             style={{backgroundPosition:"0 0 ",backgroundRepeat:"repeat"}}
