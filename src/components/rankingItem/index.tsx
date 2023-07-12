@@ -1,6 +1,9 @@
-import { memo }  from "react";
+import {memo, useEffect} from "react";
 import type { FC,ReactNode } from "react";
 import {getImageSize} from "@/utils/formatNumber.ts";
+import {useThunkDispatch} from "@/store/hooks.ts";
+import {FetchCurrentSong} from "@/store/api/play/store.ts";
+import {apiGetSongDetail, apiGetSongLyric} from "@/store/api/play/fetchService.ts";
 
 interface MyProps {
     children? : ReactNode
@@ -8,6 +11,16 @@ interface MyProps {
 }
 const RankingItem: FC<MyProps> = memo(({ itemData }) => {
     const { tracks = [] } = itemData
+    const dispatch = useThunkDispatch()
+    const handleClickSong = async (songId:number) =>{
+        const songDetail = await apiGetSongDetail(songId)
+        const songLyric = await apiGetSongLyric(songId)
+        dispatch(FetchCurrentSong({
+            songId,
+            songDetailData:songDetail[0],
+            songLyricData:songLyric }
+        ))
+    }
     return(
         <div className="w-[230px] last:w-[228px]">
             <div className="h-[100px] flex ml-5 mr-0 mt-5 mb-0">
@@ -29,6 +42,7 @@ const RankingItem: FC<MyProps> = memo(({ itemData }) => {
             </div>
             <div className="list text-[12px]">
                 {tracks.slice(0, 10).map((item: any, index: number) => {
+                    // console.log(item);
                     return (
                         <div className="group relative flex items-center h-8" key={item.id}>
                             <div className={`index w-[35px] text-center text-base ml-2.5 ${index > 2 ?'' :'text-[#c10d0c]'}`}>{index + 1}</div>
@@ -37,7 +51,9 @@ const RankingItem: FC<MyProps> = memo(({ itemData }) => {
                                 <div className="items-center w-[82px] hidden group-hover:block">
                                     <button
                                         style={{backgroundPosition:"-267px -268px"}}
-                                        className="decorateBtn w-[17px] h-[17px] cursor-pointer ml-2"></button>
+                                        className="decorateBtn w-[17px] h-[17px] cursor-pointer ml-2"
+                                        onClick={()=>{handleClickSong(item.id)}}
+                                    ></button>
                                     <button
                                         style={{backgroundPosition:"0 -700px"}}
                                         className="rankingIcon relative top-[2px] w-[17px] h-[17px] cursor-pointer ml-2"></button>
