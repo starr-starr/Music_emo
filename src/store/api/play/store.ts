@@ -1,5 +1,4 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import {useGetSongLyricDataQuery} from "@/store/api/play/playApi.ts";
 import {parseLyric} from "@/utils/parseLyric.ts";
 import {RootState} from "@/store";
 
@@ -207,12 +206,13 @@ export const FetchCurrentSong = createAsyncThunk<void,FetchCurrentSongParams,{st
     // const songId = 4877413
     // const { data: songDetailData } = useGetSongDetailDataQuery(songId)
     // const { data: songLyricData } = useGetSongLyricDataQuery(songId)
-    const playSongList = getState().player.playSongList
+    //     console.log(songLyricData);
+        const playSongList = getState().player.playSongList
     const findIndex = playSongList.findIndex((item: { id: number; }) => item.id === songId)
     if (findIndex === -1) {
         const newList = [...playSongList];
         newList.push(songDetailData);
-        songDetailData && dispatch(changeCurrentSong(songDetailData[0]));
+        songDetailData && dispatch(changeCurrentSong(songDetailData));
         dispatch(changePlaySongList(newList));
         dispatch(changePlaySongIndex(newList.length - 1));
     } else {
