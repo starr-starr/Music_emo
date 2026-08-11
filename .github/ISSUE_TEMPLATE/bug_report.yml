@@ -1,0 +1,33 @@
+name: Bug report
+description: Report a reproducible problem in Music_emo.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Do not include credentials, private API data, or security-sensitive details. See SECURITY.md for security reports.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and the expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start the app with ...
+        2. Navigate to ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, Node.js version, and API setup (without secrets).
+    validations:
+      required: true

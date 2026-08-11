@@ -1,0 +1,19 @@
+name: Feature request
+description: Suggest an improvement that fits the project's learning and maintenance scope.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Explain the user need or limitation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful solution and any API or design impact.
+    validations:
+      required: true
